@@ -135,5 +135,5 @@ class ZipIterator(LocalFileIterator):
 
 def myfunc():
     return 2 + 2
-pit = PlainIterator('ola.txt')
+pit = PlainIterator('hello.txt')
 pit.events.on_start_reading += myfunc
