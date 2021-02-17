@@ -1,0 +1,2 @@
+class FileIteratorException(Exception):
+    pass
