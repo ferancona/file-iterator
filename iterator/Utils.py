@@ -12,14 +12,6 @@ class ReadEvents(events.Events):
                 'on_end_file_reached')
 
 
-class ExceptionRaiser:
-    def __init__(self, exception):
-        super().__init__()
-        self.ex = exception
-    def raise_ex(self):
-        raise self.ex
-
-
 class FileManager:
     @classmethod
     def is_gzipfile(cls, filepath):
