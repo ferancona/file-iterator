@@ -1,5 +1,5 @@
-from Utils import ReadEvents
-from Exceptions import FileIteratorException, ExceptionRaiser
+from .Utils import ReadEvents
+from .Exceptions import FileIteratorException, ExceptionRaiser
 
 import gzip, zipfile
 from abc import ABC, abstractmethod

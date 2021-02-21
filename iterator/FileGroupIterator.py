@@ -1,7 +1,6 @@
-# Imports.
-from Utils import ReadEvents, FileManager
-from FileIterator import LocalFileIterator
-from Exceptions import FileIteratorException, ExceptionRaiser
+from .Utils import ReadEvents, FileManager
+from .FileIterator import LocalFileIterator
+from .Exceptions import FileIteratorException, ExceptionRaiser
 
 from pathlib import Path
 
