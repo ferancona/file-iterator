@@ -1,2 +1,2 @@
 # file-iterator
-Tool for reading efficiently different file types (plain, zip or gzip) through the same interface.
+Tool for iterating the contents of different file types (plain, zip or gzip) through the same interface.
