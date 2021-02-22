@@ -15,9 +15,10 @@ class ReadEvents(events.Events):
 class FileManager:
     @classmethod
     def is_gzipfile(cls, filepath):
-        # First bytes of gzip files are: 1f 8b.
+        # First bytes of gzip files are: 1f8b.
         FIRST_BYTES = '1f8b'
-        return open(filepath).read(2).encode('hex') == FIRST_BYTES
+        bytes_read = open(filepath, 'rb').read(2)
+        return bytes_read.hex() == FIRST_BYTES
 
     @classmethod
     def is_zipfile(cls, filepath):
