@@ -82,15 +82,16 @@ class LocalFileIterator(ABC):
     
     def copy(self):
         copy = self.__class__(self.name)
-        copy.skip_lines(self.lines_read)
+        copy._file.seek(self._file.tell())
+        copy._lines_read = self._lines_read
+        copy.events.on_start_reading += self._ev.on_start_reading
+        copy.events.on_stop_reading += self._ev.on_stop_reading
+        copy.events.on_end_file_reached += self._ev.on_end_file_reached
         return copy
     
     def skip_lines(self, num):
         for _ in range(num):
             next(self)
-    
-    def _stop_iteration(self):
-        raise StopIteration
     
     def close(self):
         self._file.close()
