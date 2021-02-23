@@ -24,7 +24,7 @@ class LocalFileIterator(ABC):
         self._ev = ReadEvents(ReadEvents.file_events)
         self._ev.on_end_file_reached += self.close
         
-        self._lines_read = None
+        self._lines_read = 0
         self._file = None
         self._iter = None
         
@@ -51,22 +51,24 @@ class LocalFileIterator(ABC):
     @abstractmethod
     def _open(self):
         self._iter = iter(self._file)
-        self._ev.on_start_reading()
+        self._ev.on_start_file_reading()
     
     def __next__(self):
-        try:
+        try: 
             self._lines_read += 1
-            try: 
-                return next(self._iter)
-            except StopIteration:
-                self._lines_read -= 1
-                self._ev.on_end_file_reached()
-                return None
+            return next(self._iter)
+        except StopIteration:
+            self._lines_read -= 1
+            self._ev.on_end_file_reached()
+            return None
         except TypeError:
             # First read.
-            self._lines_read = 0
+            self._lines_read -= 1
             self._open()
             return next(self)
+        except ValueError:
+            # Read a closed file (when done).
+            return None
     
     def __iter__(self):
         it = self.copy()
@@ -82,10 +84,12 @@ class LocalFileIterator(ABC):
     
     def copy(self):
         copy = self.__class__(self.name)
-        copy._file.seek(self._file.tell())
-        copy._lines_read = self._lines_read
-        copy.events.on_start_reading += self._ev.on_start_reading
-        copy.events.on_stop_reading += self._ev.on_stop_reading
+        if self.lines_read > 0:
+            copy._open()
+            copy._file.seek(self._file.tell())
+            copy._lines_read = self._lines_read
+        copy.events.on_start_file_reading += self._ev.on_start_file_reading
+        copy.events.on_stop_file_reading += self._ev.on_stop_file_reading
         copy.events.on_end_file_reached += self._ev.on_end_file_reached
         return copy
     
@@ -94,8 +98,9 @@ class LocalFileIterator(ABC):
             next(self)
     
     def close(self):
-        self._file.close()
-        self._ev.on_stop_reading()
+        if self._file:
+            self._file.close()
+            self._ev.on_stop_file_reading()
         
     @classmethod
     def copy_iter(cls, iterator):
@@ -128,13 +133,3 @@ class ZipIterator(LocalFileIterator):
         self.__zip = zipfile.ZipFile(self.path)
         self._file = self.__zip.open(self.__zip.namelist()[0])
         super()._open()
-    
-    def close(self):
-        super().close()
-        self.__zip.close()
-
-
-def myfunc():
-    return 2 + 2
-pit = PlainIterator('hello.txt')
-pit.events.on_start_reading += myfunc
