@@ -1,17 +1,20 @@
 import pytest
-
 import gzip, zipfile, pathlib
 
+from iterator.FileIterator import PlainIterator, \
+    GzipIterator, ZipIterator
 
+
+# Helper functions.
 def write_nums(f, nums=10):
     for i in range(nums):
-        f.write(str(i).encode())
+        f.write(f'{i}\n'.encode())
 
 def get_path_obj(filename):
     return pathlib.Path(filename).resolve()
 
 
-@pytest.fixture()
+@pytest.fixture
 def gzip_file():
     p = get_path_obj('test.gz')
     with gzip.open(str(p), 'wb') as f:
@@ -35,3 +38,21 @@ def zip_file(txt_file):
         z.write(str(p_txt))
     yield p_zip
     p_zip.unlink()
+
+@pytest.fixture
+def plain_iter(txt_file):
+    it = PlainIterator(txt_file)
+    yield it
+    it.close()
+
+@pytest.fixture
+def gzip_iter(gzip_file):
+    it = GzipIterator(gzip_file)
+    yield it
+    it.close()
+
+@pytest.fixture
+def zip_iter(zip_file):
+    it = ZipIterator(zip_file)
+    yield it
+    it.close()
