@@ -6,9 +6,7 @@ class ReadEvents(events.Events):
     __events__ = ('on_start_file_reading', 'on_stop_file_reading', 
                   'on_end_file_reached', 'on_end_reached')
 
-    @property
-    def file_events(self):
-        return ('on_start_file_reading', 'on_stop_file_reading', 
+    file_events = ('on_start_file_reading', 'on_stop_file_reading', 
                 'on_end_file_reached')
 
     def copy(self, omit=None):
