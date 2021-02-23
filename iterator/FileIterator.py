@@ -20,7 +20,9 @@ class LocalFileIterator(ABC):
             self.name = p.name
             self.path = str(p)
         else:
-            raise FileIteratorException('Please provide a filename or filepath.')
+            raise FileIteratorException(
+                'Please provide a filename or filepath.'
+            )
         self._ev = ReadEvents(ReadEvents.file_events)
         self._ev.on_end_file_reached += self.close
         
@@ -38,7 +40,9 @@ class LocalFileIterator(ABC):
         elif type_ == 'gzip':
             return GzipIterator(filepath)
         else:
-            raise Exception('Please provide a valid type_ (plain, zip or gzip).')
+            raise FileIteratorException(
+                'Please provide a valid type_ (plain, zip or gzip).'
+            )
         
     @property
     def lines_read(self):
