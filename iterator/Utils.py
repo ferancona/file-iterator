@@ -29,7 +29,6 @@ class Read_EventSlot(events.events._EventSlot):
         for target in self.targets:
             if target not in omit:
                 copy.targets.append(target)
-            # copy.targets = self.targets
         copy.__name__ = self.__name__
         return copy
 
