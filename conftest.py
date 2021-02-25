@@ -32,6 +32,10 @@ def name_zip():
     return 'test.zip'
 
 @pytest.fixture
+def names(txt_file, gzip_file, zip_file):
+    return [txt_file, gzip_file, zip_file]
+
+@pytest.fixture
 def txt_file(name_txt):
     p = get_path_obj(name_txt)
     with open(str(p), 'wb') as f:
@@ -75,7 +79,7 @@ def zip_iter(zip_file):
     it.close()
 
 @pytest.fixture
-def group_iter(txt_file, gzip_file, zip_file):
-    it = FileGroupIterator([txt_file, gzip_file, zip_file])
+def group_iter(names):
+    it = FileGroupIterator(names)
     yield it
     it.close()
