@@ -46,10 +46,15 @@ class FileIter:
     def test_lines_read_skip(self, iter_imp):
         iter_imp.skip_lines(5)
         assert iter_imp.lines_read == 5
+    
+    def test_lines_read_exhausted(self, iter_imp, lines_no):
+        while next(iter_imp):
+            pass
+        assert iter_imp.lines_read == lines_no
 
     def test_natural_iteration(self, iter_imp):
         # "For loop behaviour."
-        # for line in FileIter: pass
+        # for line in iter_imp: pass
         it = iter(iter_imp)
         with pytest.raises(StopIteration):
             line = next(it)
@@ -62,17 +67,29 @@ class FileIter:
         while line:
             line = next(iter_imp)
         assert line is None
+    
+    def test_non_exhausted_for_iteration(self, iter_imp):
+        for line in iter_imp:
+            pass
+        assert iter_imp.lines_read == 0
 
     def test_copy_lines_read(self, iter_imp):
         for _ in range(5):
             next(iter_imp)
         copy = iter_imp.copy()
         assert copy.lines_read == iter_imp.lines_read
+        
+    def test_copy_same_next_line(self, iter_imp):
+        for _ in range(5):
+            next(iter_imp)
+        copy = iter_imp.copy()
+        assert next(copy) == next(iter_imp)
 
-    def test_context_manager(self, iter_imp):
+    def test_context_manager(self, iter_imp, lines_no):
         with iter_imp as it:
-            lines = [line for line in it]
-        assert lines
+            while next(it):
+                pass
+        assert it.lines_read == lines_no
     
     # def test_copy_has_same_events(self):
     #     pass
@@ -83,6 +100,10 @@ class TestPlainIter(FileIter):
     @pytest.fixture
     def iter_imp(self, plain_iter):
         yield plain_iter
+    
+    @pytest.fixture
+    def test_file_name(self, plain_iter, name_txt):
+         assert plain_iter.name == name_txt
 
 
 class TestGzipIter(FileIter):
@@ -90,6 +111,10 @@ class TestGzipIter(FileIter):
     @pytest.fixture
     def iter_imp(self, gzip_iter):
         yield gzip_iter
+    
+    @pytest.fixture
+    def test_file_name(self, gzip_iter, name_gzip):
+        assert gzip_iter.name == name_gzip
 
 
 class TestZipIter(FileIter):
@@ -97,3 +122,7 @@ class TestZipIter(FileIter):
     @pytest.fixture
     def iter_imp(self, zip_iter):
         yield zip_iter
+        
+    @pytest.fixture
+    def test_file_name(self, zip_iter, name_zip):
+         assert zip_iter.name == name_zip
