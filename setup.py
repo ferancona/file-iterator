@@ -1,12 +1,14 @@
 from setuptools import setup, find_packages
 
-setup(name='file-iterator',
+setup(name='file_iterator',
     version='0.0.1',
     description='Utilities for iterating file contents.',
-    url='#',
+    url='https://github.com/ferancona/file-iterator',
     author='Fernando Ancona',
     author_email='',
-    install_requires=[],
+    install_requires=[
+        'events'
+    ],
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',
