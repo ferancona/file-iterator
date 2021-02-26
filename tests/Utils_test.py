@@ -1,6 +1,6 @@
 import pytest
 
-from iterator.Utils import FileManager
+from file_iterator.Utils import FileManager
 
 
 def test_is_gzipfile(gzip_file):

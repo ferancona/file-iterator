@@ -1,9 +1,9 @@
 import pytest
 import gzip, zipfile, pathlib
 
-from iterator.FileIterator import FileIterator, \
+from file_iterator.FileIterator import FileIterator, \
     PlainIterator, GzipIterator, ZipIterator
-from iterator.Exceptions import FileIteratorException
+from file_iterator.Exceptions import FileIteratorException
 
 
 def is_instance(path, type_, class_):

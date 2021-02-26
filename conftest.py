@@ -1,9 +1,9 @@
 import pytest
 import gzip, zipfile, pathlib
 
-from iterator.FileIterator import PlainIterator, \
+from file_iterator.FileIterator import PlainIterator, \
     GzipIterator, ZipIterator
-from iterator.FileGroupIterator import FileGroupIterator
+from file_iterator.FileGroupIterator import FileGroupIterator
 
 
 # Helper functions.

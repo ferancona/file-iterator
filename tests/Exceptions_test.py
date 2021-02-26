@@ -1,6 +1,6 @@
 import pytest
 
-from iterator.Exceptions import ExceptionRaiser
+from file_iterator.Exceptions import ExceptionRaiser
 
 
 @pytest.fixture
