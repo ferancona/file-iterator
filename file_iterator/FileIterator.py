@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 
 
-class LocalFileIterator(ABC):
+class FileIterator(ABC):
     """
     Encapsulates the core of iteration logic and event firing.
     The class LocalFileIterator exists mainly for 2 reasons:
@@ -111,7 +111,7 @@ class LocalFileIterator(ABC):
         return iterator.copy()
 
 
-class PlainIterator(LocalFileIterator):
+class PlainIterator(FileIterator):
     def __init__(self, name):
         super().__init__(name)
         
@@ -120,7 +120,7 @@ class PlainIterator(LocalFileIterator):
         super()._open()
 
 
-class GzipIterator(LocalFileIterator):
+class GzipIterator(FileIterator):
     def __init__(self, name):
         super().__init__(name)
     
@@ -129,7 +129,7 @@ class GzipIterator(LocalFileIterator):
         super()._open()
 
 
-class ZipIterator(LocalFileIterator):
+class ZipIterator(FileIterator):
     def __init__(self, name):
         super().__init__(name)
         

@@ -1,14 +1,14 @@
 import pytest
 import gzip, zipfile, pathlib
 
-from iterator.FileIterator import LocalFileIterator, \
+from iterator.FileIterator import FileIterator, \
     PlainIterator, GzipIterator, ZipIterator
 from iterator.Exceptions import FileIteratorException
 
 
-def is_instance(path, kind, class_):
+def is_instance(path, type_, class_):
     return isinstance(
-        LocalFileIterator.get_iter(str(path), kind), 
+        FileIterator.get_iter(str(path), type_), 
         class_
     )
 
@@ -23,7 +23,7 @@ def test_file_factory_zip(zip_file):
 
 def test_file_factory_invalid_type(txt_file):
     with pytest.raises(FileIteratorException):
-        LocalFileIterator.get_iter(str(txt_file), 'any')
+        FileIterator.get_iter(str(txt_file), 'any')
 
 
 class FileIter:

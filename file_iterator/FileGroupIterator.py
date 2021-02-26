@@ -1,5 +1,5 @@
 from .Utils import ReadEvents, FileManager
-from .FileIterator import LocalFileIterator
+from .FileIterator import FileIterator
 from .Exceptions import FileIteratorException, ExceptionRaiser
 
 from pathlib import Path
@@ -54,7 +54,7 @@ class FileGroupIterator:
     
     def add_iter_path(self, path):
         iter_type = self.__iter_required(path)
-        it = LocalFileIterator.get_iter(path, iter_type)
+        it = FileIterator.get_iter(path, iter_type)
         it.events.on_start_reading += self._ev.on_start_file_reading
         it.events.on_stop_reading += self._ev.on_stop_file_reading
         it.events.on_end_file_reached += self._ev.on_end_file_reached
