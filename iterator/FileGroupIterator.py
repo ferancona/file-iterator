@@ -21,6 +21,7 @@ class FileGroupIterator:
         self._exhausted = False
         self._lines_accum = 0
         self._files_read = 0
+        self._file_iter = None
         self._iter = None
     
     @property
@@ -62,14 +63,14 @@ class FileGroupIterator:
     
     def __next_file(self, next_=True):
         try:
-            self._files_read += 1
-            self._lines_accum += self.lines_read_file
+            if not self._exhausted:
+                self._files_read += 1
+                self._lines_accum += self.lines_read_file
             self._file_iter = next(self._files_iter)
             self._iter = iter(self._file_iter)
             if next_:
                 return next(self)
         except StopIteration:
-            self._lines_accum -= self.lines_read_file
             self._exhausted = True
             self._ev.on_end_reached()
             return None
@@ -120,7 +121,8 @@ class FileGroupIterator:
     def skip_files(self, num):
         closed = 0
         while closed < num and not self._exhausted:
-            self._file_iter.close()
+            if self._file_iter:
+                self._file_iter.close()
             closed += 1
             self.__next_file(next_=False)
 
