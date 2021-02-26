@@ -6,23 +6,20 @@ from iterator.FileIterator import LocalFileIterator, \
 from iterator.Exceptions import FileIteratorException
 
 
-def test_file_factory_plain(txt_file):
-    assert isinstance(
-        LocalFileIterator.get_iter(str(txt_file), 'plain'), 
-        PlainIterator
+def is_instance(path, kind, class_):
+    return isinstance(
+        LocalFileIterator.get_iter(str(path), kind), 
+        class_
     )
+
+def test_file_factory_plain(txt_file):
+    assert is_instance(txt_file, 'plain', PlainIterator)
 
 def test_file_factory_gzip(gzip_file):
-    assert isinstance(
-        LocalFileIterator.get_iter(str(gzip_file), 'gzip'), 
-        GzipIterator
-    )
+    assert is_instance(gzip_file, 'gzip', GzipIterator)
 
 def test_file_factory_zip(zip_file):
-    assert isinstance(
-        LocalFileIterator.get_iter(str(zip_file), 'zip'), 
-        ZipIterator
-    )
+    assert is_instance(zip_file, 'zip', ZipIterator)
 
 def test_file_factory_invalid_type(txt_file):
     with pytest.raises(FileIteratorException):
