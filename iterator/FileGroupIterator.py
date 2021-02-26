@@ -135,20 +135,3 @@ class FileGroupIterator:
         elif FileManager.is_zipfile(path):
             return 'zip'
         return 'plain'
-
-
-def test():
-    file_lst = [
-        'test.txt', 
-        'test.txt.gz', 
-        'test.zip'
-    ]
-    
-    group_iter = FileGroupIterator(file_lst)
-    for line in group_iter:
-        # Do something with line.
-        pass
-    
-    with FileGroupIterator(file_lst) as group_iter:
-        # Do something with line.
-        pass
