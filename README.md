@@ -5,7 +5,7 @@ The motivation for `file-iterator` is accessibility to file contents and code re
 providing a way to link handlers to common file reading events (start/stop/end file reading).
 
 # Tutorial
-```
+```python
 from file_iterator import FileIterator, FileGroupIterator
 
 # Lets say we have a file in 3 formats.
