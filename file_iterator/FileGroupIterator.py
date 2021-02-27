@@ -63,7 +63,7 @@ class FileGroupIterator:
         it.events.on_stop_file_reading += self._ev.on_stop_file_reading
         it.events.on_end_file_reached += self._ev.on_end_file_reached
         self._files.append(it)
-        self.paths += it.path
+        self.paths.append(it.path)
     
     def __next_file(self, next_=True):
         try:
