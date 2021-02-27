@@ -11,12 +11,12 @@ class FileGroupIterator:
         self.paths = []
         self._files = []
         self._files_iter = iter(self._files)
+        self._ev = ReadEvents()
         if filepaths:
             for path in filepaths:
                 self.add_iter_path(path)
         else:
             raise FileIteratorException('Please provide filepaths.')
-        self._ev = ReadEvents()
         
         self._exhausted = False
         self._lines_accum = 0
@@ -42,7 +42,11 @@ class FileGroupIterator:
     
     @property
     def lines_read_file(self):
-        return self._iter.lines_read
+        try:
+            return self._iter.lines_read
+        except AttributeError:
+            # When _iter is None.
+            return 0
     
     @property
     def files_read(self):
@@ -55,15 +59,15 @@ class FileGroupIterator:
     def add_iter_path(self, path):
         iter_type = self.__iter_required(path)
         it = FileIterator.get_iter(path, iter_type)
-        it.events.on_start_reading += self._ev.on_start_file_reading
-        it.events.on_stop_reading += self._ev.on_stop_file_reading
+        it.events.on_start_file_reading += self._ev.on_start_file_reading
+        it.events.on_stop_file_reading += self._ev.on_stop_file_reading
         it.events.on_end_file_reached += self._ev.on_end_file_reached
         self._files.append(it)
         self.paths += it.path
     
     def __next_file(self, next_=True):
         try:
-            if not self._exhausted:
+            if self._iter_file and not self._exhausted:
                 self._files_read += 1
                 self._lines_accum += self.lines_read_file
             self._iter_file = next(self._files_iter)
