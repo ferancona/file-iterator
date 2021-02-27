@@ -33,21 +33,21 @@ def name_zip():
 
 @pytest.fixture
 def names(txt_file, gzip_file, zip_file):
-    return [txt_file, gzip_file, zip_file]
+    return list(map(str, [txt_file, gzip_file, zip_file]))
 
 @pytest.fixture
-def txt_file(name_txt):
+def txt_file(name_txt, lines_no):
     p = get_path_obj(name_txt)
     with open(str(p), 'wb') as f:
-        write_nums(f)
+        write_nums(f, lines_no)
     yield p
     p.unlink()
 
 @pytest.fixture
-def gzip_file(name_gzip):
+def gzip_file(name_gzip, lines_no):
     p = get_path_obj(name_gzip)
     with gzip.open(str(p), 'wb') as f:
-        write_nums(f)
+        write_nums(f, lines_no)
     yield p
     p.unlink()
 
