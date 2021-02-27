@@ -45,7 +45,7 @@ class FileGroupIterator:
         try:
             return self._iter.lines_read
         except AttributeError:
-            # When _iter is None.
+            # When _iter is None (start).
             return 0
     
     @property
@@ -99,6 +99,7 @@ class FileGroupIterator:
         it = self.__class__(self.paths)
         if self.files_read > 0:
             it.skip_files(self.files_read)
+        it._lines_accum = self._lines_accum
         if self.lines_read_file > 0:
             it.skip_lines(self.lines_read_file)
         
