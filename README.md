@@ -61,14 +61,14 @@ it = FileGroupIterator(names)
 print_contents(it)
 ```
 
-For loops use a copy of the iterator. Therefore, the original doesn't exhausts itself
+For loops use a copy of the iterator. Therefore, the original doesn't exhaust itself
 and we can iterate multiple times.
 ```python
 print_contents(it)
 print_contents(it)
 ```
 
-We can also iterate using next().
+We can also iterate using `next()`.
 ```python
 # Returns None when everything has been read.
 line_b = next(it)
@@ -89,6 +89,6 @@ with FileGroupIterator(names) as it:
 ```
 
 # Todo
-- [] Tests: Events.
-- [] Tutorial: Events usage.
-- [] Upload package to PyPi.
+- [ ] Tests: Events.
+- [ ] Tutorial: Events usage.
+- [ ] Upload package to PyPi.
