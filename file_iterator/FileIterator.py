@@ -32,16 +32,16 @@ class FileIterator(ABC):
         
     # Factory Method.
     @classmethod
-    def get_iter(cls, filepath, type_='plain'):
-        if type_ == 'plain':
+    def get_iter(cls, filepath, kind='plain'):
+        if kind == 'plain':
             return PlainIterator(filepath)
-        elif type_ == 'zip':
+        elif kind == 'zip':
             return ZipIterator(filepath)
-        elif type_ == 'gzip':
+        elif kind == 'gzip':
             return GzipIterator(filepath)
         else:
             raise FileIteratorException(
-                'Please provide a valid type_ (plain, zip or gzip).'
+                'Please provide a valid kind (plain, zip or gzip).'
             )
         
     @property
