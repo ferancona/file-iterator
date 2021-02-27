@@ -1,5 +1,5 @@
 # file-iterator
-Tool to iterate the contents of different file types (plain, zip or gzip) through the same interface.
+Tool to iterate the contents of different file types (*plain*, *zip* or *gzip*) through the same interface.
 
 The motivation for `file-iterator` is accessibility to file contents and code readability, as well as 
 providing a way to link handlers to common file reading events (start/stop/end file reading).
@@ -36,7 +36,7 @@ f.close()
 With the `FileIterator` interface, we could iterate the contents of any file the same way. 
 We also wouldn't need to close it.
 ```python
-from file_iterator import FileIterator, FileGroupIterator
+from file_iterator import FileIterator
 
 def print_contents(it):
     for line_bytes in it:
