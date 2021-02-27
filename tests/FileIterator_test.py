@@ -82,7 +82,7 @@ class FileIter:
         copy = iter_imp.copy()
         assert next(copy) == next(iter_imp)
 
-    def test_context_manager(self, iter_imp, lines_no):
+    def test_context_manager_lines_read(self, iter_imp, lines_no):
         with iter_imp as it:
             while next(it):
                 pass
@@ -98,9 +98,8 @@ class TestPlainIter(FileIter):
     def iter_imp(self, plain_iter):
         yield plain_iter
     
-    @pytest.fixture
     def test_file_name(self, plain_iter, name_txt):
-         assert plain_iter.name == name_txt
+        assert plain_iter.name == name_txt
 
 
 class TestGzipIter(FileIter):
@@ -109,7 +108,6 @@ class TestGzipIter(FileIter):
     def iter_imp(self, gzip_iter):
         yield gzip_iter
     
-    @pytest.fixture
     def test_file_name(self, gzip_iter, name_gzip):
         assert gzip_iter.name == name_gzip
 
@@ -119,7 +117,6 @@ class TestZipIter(FileIter):
     @pytest.fixture
     def iter_imp(self, zip_iter):
         yield zip_iter
-        
-    @pytest.fixture
+    
     def test_file_name(self, zip_iter, name_zip):
-         assert zip_iter.name == name_zip
+        assert zip_iter.name == name_zip
