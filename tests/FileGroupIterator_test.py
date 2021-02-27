@@ -9,13 +9,13 @@ class TestGroupIter(FileIter):
     @pytest.fixture
     def iter_imp(self, group_iter):
         yield group_iter
-        
-    def test_files_read_start(self, iter_imp, names):
-        assert iter_imp.curr_name == names[0]
     
+    def test_files_read_start(self, iter_imp, names):
+        assert iter_imp.curr_name == None
+
     def test_files_read_next(self, iter_imp, names, lines_no):
         next(iter_imp)
-        assert iter_imp.curr_name == names[0]
+        assert iter_imp.curr_path == names[0]
         
     def test_lines_read_skip_files(self, iter_imp):
         iter_imp.skip_files(1)
@@ -25,17 +25,17 @@ class TestGroupIter(FileIter):
         iter_imp.skip_lines(lines_no + 1)
         assert iter_imp.lines_read == lines_no + 1
     
-    def test_name_skip_lines(self, iter_imp, lines_no, names):
+    def test_path_skip_lines(self, iter_imp, lines_no, names):
         iter_imp.skip_lines(lines_no + 1)
-        assert iter_imp.curr_name == names[1]
+        assert iter_imp.curr_path == names[1]
         
-    def test_name_skip_files(self, iter_imp, names):
+    def test_path_skip_files(self, iter_imp, names):
         iter_imp.skip_files(1)
-        assert iter_imp.curr_name == names[1]
+        assert iter_imp.curr_path == names[1]
         
-    def test_name_skip_one_more(self, iter_imp, names):
+    def test_path_skip_one_more(self, iter_imp, names):
         iter_imp.skip_files(len(names) + 1)
-        assert iter_imp.curr_name == names[-1]
+        assert iter_imp.curr_path == names[-1]
     
     def test_copy_lines_read_more_than_file(self, iter_imp, lines_no):
         for _ in range(lines_no + 1):
