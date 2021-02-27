@@ -76,6 +76,7 @@ class FileGroupIterator:
                 return next(self)
         except StopIteration:
             self._exhausted = True
+            self._lines_accum -= self.lines_read_file
             self._ev.on_end_reached()
             return None
     
@@ -112,7 +113,7 @@ class FileGroupIterator:
     
     def __exit__(self, type, value, traceback):
         self.close()
-        return True
+        # return True
     
     def close(self):
         files_left = len(self._files) - self.files_read
