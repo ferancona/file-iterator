@@ -16,6 +16,11 @@ class TestGroupIter(FileIter):
     def test_files_read_next(self, iter_imp, names, lines_no):
         next(iter_imp)
         assert iter_imp.curr_path == names[0]
+    
+    def test_lines_read_exhausted(self, iter_imp, lines_no, names):
+        while next(iter_imp):
+            pass
+        assert iter_imp.lines_read == lines_no * len(names)
         
     def test_lines_read_skip_files(self, iter_imp):
         iter_imp.skip_files(1)
@@ -67,8 +72,8 @@ class TestGroupIter(FileIter):
         copy = iter_imp.copy()
         assert next(copy) == next(iter_imp)
     
-    def test_context_manager_lines_read(self, iter_imp, lines_no):
+    def test_context_manager_lines_read(self, iter_imp, lines_no, names):
         with iter_imp as it:
             while next(it):
                 pass
-        assert it.lines_read == lines_no
+        assert it.lines_read == lines_no * len(names)
