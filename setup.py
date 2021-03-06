@@ -6,7 +6,7 @@ def readme():
 setup (
     name='file-iterator',
     packages=find_packages(),
-    version='1.0.0',
+    version='1.0.1',
     license='MIT',
     description='Utilities for iterating file contents.',
     long_description=readme(),
