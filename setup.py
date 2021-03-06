@@ -1,11 +1,17 @@
 from setuptools import setup, find_packages
 
+def readme():
+    return open('README.md').read()
+
 setup (
     name='file-iterator',
     packages=find_packages(),
     version='1.0.0',
     license='MIT',
     description='Utilities for iterating file contents.',
+    long_description=readme(),
+    long_description_content_type="text/markdown",
+    
     author='Fernando Ancona',
     author_email='f.anconac@gmail.com',
     url='https://github.com/ferancona/file-iterator',
