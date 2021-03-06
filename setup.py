@@ -15,7 +15,7 @@ setup (
     author='Fernando Ancona',
     author_email='f.anconac@gmail.com',
     url='https://github.com/ferancona/file-iterator',
-    download_url = 'https://github.com/ferancona/file-iterator/archive/1.0.0.tar.gz',
+    download_url = 'https://github.com/ferancona/file-iterator/archive/1.0.1.tar.gz',
     keywords = ['FILE', 'READ', 'CONTENT', 'ITERATION'],
     install_requires=[
         'events'
