@@ -2,29 +2,43 @@
 Tool to iterate the contents of different file types (*plain*, *zip* or *gzip*) through the same interface.
 
 The motivation for `file-iterator` is accessibility to file contents and code readability, as well as 
-providing a way to link handlers to common file reading events (start/stop/end file reading).
+providing a way to link handlers (functions) to common file-reading events (start/stop/end file reading).
 
-# Walkthrough - Tutorial
+## Installing
+file-iterator is on PyPI so all you need to do is:
+
+```
+pip install file-iterator
+```
+
+## Testing
+Just run:
+
+```
+pytest tests/
+```
+
+## Overview - Tutorial
 ```python
-# Lets say we have a file in 3 formats.
+# Let's say we have the same text in 3 file formats.
 name_txt = 'file.txt'
 name_gzip = 'file.gz'
 name_zip = 'file.zip'
 
-# You could read a text file just like this:
+# In Python, we could read the text file just like this:
 f = open(name_txt, 'r')
 for line in f:
     print(line)
 f.close()
 
-# For GZIPs, a library is required.
+# For the GZIP file, a library is required.
 import gzip
 f = gzip.open(name_gzip, 'r')
 for line in f:
     print(line)
 f.close()
 
-# As well as for ZIPs.
+# As well as for the ZIP file.
 import zipfile
 z = zipfile.ZipFile(name_zip, 'r')
 f = z.open(z.namelist()[0], 'r')
@@ -88,7 +102,11 @@ with FileGroupIterator(names) as it:
 
 ```
 
-# Todo
+## License
+MIT
+
+## Todo
+- [X] Upload package to PyPi.
 - [ ] Tests: Events.
 - [ ] Tutorial: Events usage.
-- [ ] Upload package to PyPi.
+- [ ] Event handlers: Receive a parameter containing info about the sender (object who triggered the event).
